@@ -1,0 +1,20 @@
+type Query {
+    info: String!
+    feed: [Quote!]!
+    quote(id: ID!): Quote
+}
+
+type Mutation {
+    post(description: String!): Quote!
+    delete(id: ID!): Quote
+    update(id: ID!, description: String): Quote
+}
+
+type Subscription {
+    newQuote: Quote
+}
+
+type Quote {
+    id: ID!
+    description: String!
+}
