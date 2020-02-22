@@ -3,4 +3,14 @@ type Quote {
     createdAt: DateTime! @createdAt
     updatedAt: DateTime! @updatedAt
     description: String!
+    postedBy: User
+}
+
+type User {
+    id: ID! @id
+    createdAt: DateTime! @createdAt
+    name: String!
+    email: String! @unique
+    password: String!
+    quotes: [Quote!]!
 }

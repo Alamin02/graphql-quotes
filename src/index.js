@@ -1,5 +1,6 @@
 const { GraphQLServer } = require('graphql-yoga');
 const { prisma } = require('./generated/prisma-client');
+const mutation = require('./resolvers/Mutation');
 
 const resolvers = {
     Query: {
@@ -13,28 +14,7 @@ const resolvers = {
             })
         },
     },
-    Mutation: {
-        post: (root, args, context, info) => {
-            return context.prisma.createQuote({
-                description: args.description
-            })
-        },
-        delete: (root, args, context, info) => {
-            return context.prisma.deleteQuote({
-                id: args.id
-            })
-        },
-        update: (root, args, context, info) => {
-            return context.prisma.updateQuote({
-                where: {
-                    id: args.id
-                },
-                data: {
-                    description: args.description
-                }
-            })
-        }
-    },
+    Mutation: mutation,
     Subscription: {
         newQuote: {
             subscribe: async (root, args, context, info) => {

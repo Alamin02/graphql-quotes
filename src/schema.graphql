@@ -8,6 +8,8 @@ type Mutation {
     post(description: String!): Quote!
     delete(id: ID!): Quote
     update(id: ID!, description: String): Quote
+    signup(email: String!, password: String!, name: String!): AuthPayload
+    login(email: String!, password: String!): AuthPayload
 }
 
 type Subscription {
@@ -17,4 +19,18 @@ type Subscription {
 type Quote {
     id: ID!
     description: String!
+    postedBy: User
+}
+
+type AuthPayload {
+    token: String
+    user: User
+}
+
+type User {
+    id: ID!
+    name: String!
+    email: String!
+    password: String!
+    quotes: [Quote!]!
 }
