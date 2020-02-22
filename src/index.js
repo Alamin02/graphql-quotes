@@ -22,13 +22,25 @@ const resolvers = {
             },
             resolve: (payload) => payload,
         }
+    },
+    Quote: {
+        id: parent => parent.id,
+        description: parent => parent.description,
+        postedBy: (root, args, context, info) => {
+            return context.prisma.quote({ id: root.id }).postedBy()
+        }
     }
 }
 
 const server = new GraphQLServer({
     typeDefs: './src/schema.graphql',
     resolvers,
-    context: { prisma },
+    context: request => {
+        return {
+            ...request,
+            prisma
+        }
+    },
 })
 
 server.start(() => console.log(`Server is running on http://localhost:4000`))

@@ -1,12 +1,13 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-// Will be replaced by enviroment variable
-const SECRET_KEY = "!&@^bjkbJHB!J@*&DGKJASH09@*@#@";
+const { SECRET_KEY, getUserId } = require('../utils');
 
 const _post = (root, args, context, info) => {
+    const userId = getUserId(context);
     return context.prisma.createQuote({
-        description: args.description
+        description: args.description,
+        postedBy: { connect: { id: userId } },
     })
 }
 
